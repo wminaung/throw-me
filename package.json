@@ -1,0 +1,34 @@
+{
+  "name": "throw-me",
+  "version": "1.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "http-errors",
+    "express",
+    "typescript",
+    "custom-errors"
+  ],
+  "author": "Win Min Aung",
+  "license": "MIT",
+  "description": "HTTP error factory for Node.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "vitest": "^4.0.18",
+    "@types/node": "^25.3.0",
+    "express": "^5.2.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
