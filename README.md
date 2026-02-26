@@ -1,6 +1,6 @@
 # throw-me
 
-A lightweight, semantic, and TypeScript-first HTTP error factory. Stop manually creating error objects and start throwing them with style.
+A lightweight, semantic, and TypeScript-first HTTP error factory.
 
 ## Installation
 
