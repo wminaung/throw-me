@@ -5,7 +5,7 @@ A lightweight, semantic, and TypeScript-first HTTP error factory. Stop manually 
 ## Installation
 
 ```bash
-npm install @wminaung/throw-me
+npm install throw-me
 ```
 
 ## Available Errors
