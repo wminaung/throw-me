@@ -53,3 +53,39 @@ app.get("/user/:id", (req: Request, res: Response) => {
   }
 });
 ```
+
+### Extending the Error Library
+
+If the built-in methods in ThrowMe aren't enough, you can easily create custom errors that maintain compatibility with the BaseError system and TypeScript's type-checking.
+
+```typescript
+import { BaseError, ThrowMe } from "your-library-name";
+
+// 1. Define your custom error class
+class CustomPaymentError extends BaseError {
+  public recoveryStep: string;
+
+  constructor(message: string = "Payment required", recoveryStep: string) {
+    super(message, 402); // 402 Payment Required
+    this.recoveryStep = recoveryStep;
+  }
+}
+
+// 2. Use it in your logic
+function processOrder() {
+  throw new CustomPaymentError(
+    "Subscription expired",
+    "Visit /billing to renew",
+  );
+}
+
+// 3. Catch with full Type Safety
+try {
+  processOrder();
+} catch (error) {
+  if (error instanceof CustomPaymentError) {
+    // TypeScript knows 'recoveryStep' exists here!
+    console.error(`Error: ${error.message}. Action: ${error.recoveryStep}`);
+  }
+}
+```

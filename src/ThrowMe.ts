@@ -11,7 +11,9 @@ import {
   ServiceUnavailableError,
 } from "./HttpErrors.js";
 
-export class ThrowMe {
+export abstract class ThrowMe {
+  private constructor() {}
+
   /** 400 - Bad Request */
   static badRequest(message?: string) {
     return new BadRequestError(message);
