@@ -1,14 +1,25 @@
 {
   "name": "throw-me",
-  "version": "1.0.4",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "version": "1.0.5",
+  "description": "HTTP error factory for Node.js",
+  "author": "Win Min Aung",
+  "license": "MIT",
   "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
     "prepublishOnly": "npm run build",
     "test": "vitest run",
     "test:watch": "vitest"
@@ -19,17 +30,14 @@
     "typescript",
     "custom-errors"
   ],
-  "author": "Win Min Aung",
-  "license": "MIT",
-  "description": "HTTP error factory for Node.js",
-  "dependencies": {},
   "devDependencies": {
     "@types/express": "^5.0.6",
-    "vitest": "^4.0.18",
     "@types/node": "^25.3.0",
     "express": "^5.2.1",
+    "tsup": "^8.5.1",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
   },
   "repository": {
     "type": "git",
