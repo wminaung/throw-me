@@ -1,6 +1,6 @@
 {
   "name": "throw-me",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "HTTP error factory for Node.js",
   "author": "Win Min Aung",
   "license": "MIT",
