@@ -12,7 +12,7 @@ import {
   TooManyRequestsError,
   MethodNotAllowedError,
 } from "./HttpErrors.js";
-import { ErrorCode, schema } from "./error-schema.js";
+import { schema } from "./error-schema.js";
 import { BaseError } from "./BaseError.js";
 
 describe("HTTP Error Classes Tests", () => {
