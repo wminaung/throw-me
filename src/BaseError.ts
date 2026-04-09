@@ -1,5 +1,3 @@
-import { ErrorCode } from "./error-schema.js";
-
 export abstract class BaseError extends Error {
   public readonly statusCode: number;
   public readonly isOperational: boolean;

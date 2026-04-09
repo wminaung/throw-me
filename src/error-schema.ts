@@ -1,3 +1,5 @@
+import { BadRequestError } from "./HttpErrors.js";
+
 export enum ErrorCode {
   BAD_REQUEST = "BAD_REQUEST",
   UNAUTHORIZED = "UNAUTHORIZED",
