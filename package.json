@@ -1,6 +1,6 @@
 {
   "name": "throw-me",
-  "version": "1.0.7",
+  "version": "2.0.0",
   "description": "HTTP error for Node.js",
   "author": "Win Min Aung",
   "license": "MIT",
