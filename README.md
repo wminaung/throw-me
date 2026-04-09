@@ -1,6 +1,6 @@
 # throw-me
 
-A lightweight, semantic, and TypeScript-first HTTP error factory.
+A lightweight, semantic, and TypeScript-first HTTP error library using classes.
 
 ## Installation
 
@@ -10,82 +10,89 @@ npm install throw-me
 
 ## Available Errors
 
-| Method                     | Status       | Description                       |
-| -------------------------- | ------------ | --------------------------------- |
-| Throw.badRequest()         | 400          | Invalid or malformed request.     |
-| Throw.validation()         | 400          | Input validation failures.        |
-| Throw.unauthorized()       | 401          | Authentication is required.       |
-| Throw.forbidden()          | 403          | Authenticated but not permitted.  |
-| Throw.notFound()           | 404          | Resource does not exist.          |
-| Throw.conflict()           | 409          | Resource already exists/conflict. |
-| Throw.internal()           | 500          | Generic server failure.           |
-| Throw.notImplemented()     | 501          | Feature not yet implemented.      |
-| Throw.serviceUnavailable() | 503          | Server is down or overloaded.     |
-| Throw.custom(msg, code)    | User defined | Throw any specific status code.   |
+| Class                   | Status | Code                | Description                      |
+| ----------------------- | ------ | ------------------- | -------------------------------- |
+| BadRequestError         | 400    | BAD_REQUEST         | Invalid or malformed request.    |
+| ValidationError         | 422    | VALIDATION_FAIL     | Input validation failures.       |
+| UnauthorizedError       | 401    | UNAUTHORIZED        | Authentication is required.      |
+| ForbiddenError          | 403    | FORBIDDEN           | Authenticated but not permitted. |
+| NotFoundError           | 404    | NOT_FOUND           | Resource does not exist.         |
+| MethodNotAllowedError   | 405    | METHOD_NOT_ALLOWED  | Method not allowed.              |
+| ConflictError           | 409    | CONFLICT            | Resource conflict.               |
+| TooManyRequestsError    | 429    | TOO_MANY_REQUESTS   | Too many requests.               |
+| InternalServerError     | 500    | INTERNAL_SERVER     | Generic server failure.          |
+| NotImplementedError     | 501    | NOT_IMPLEMENTED     | Feature not implemented.         |
+| ServiceUnavailableError | 503    | SERVICE_UNAVAILABLE | Server unavailable.              |
 
-### Example
+## Example
 
-```typescript
+```ts
 import express, { Request, Response } from "express";
-import { ThrowMe as Throw, BaseError } from "throw-me";
+import { NotFoundError, UnauthorizedError, BaseError } from "throw-me";
 
 const app = express();
 
 app.get("/user/:id", (req: Request, res: Response) => {
   const userId = req.params.id as string;
+
   try {
     if (!userId) {
-      throw Throw.badRequest("Missing User ID");
+      throw new NotFoundError("Missing User ID");
     }
 
     if (userId !== "1") {
-      throw Throw.unauthorized("Access Denied");
+      throw new UnauthorizedError("Access Denied");
     }
+
     res.send("success");
   } catch (error: any) {
     if (error instanceof BaseError) {
-      // Handles 400, 401, 404, etc. automatically
-      res.status(error.statusCode).send(error.message);
+      res.status(error.statusCode).send({
+        message: error.message,
+        code: error.code,
+      });
     } else {
-      // Fallback for unexpected bugs
       res.status(500).send("unexpected error!");
     }
   }
 });
 ```
 
-### Extending the Error Library
+## Features
 
-If the built-in methods in ThrowMe aren't enough, you can easily create custom errors that maintain compatibility with the BaseError system and TypeScript's type-checking.
+- ✅ Strong TypeScript support
+- ✅ Class-based errors (better `instanceof`)
+- ✅ Consistent error schema
+- ✅ Custom error codes
+- ✅ Clean stack traces
+- ✅ Fully testable
 
-```typescript
-import { BaseError, ThrowMe } from "throw-me";
+## Extending
 
-// 1. Define your custom error class
-class CustomPaymentError extends BaseError {
-  public recoveryStep: string;
+Create your own custom error:
 
-  constructor(message: string = "Payment required", recoveryStep: string) {
-    super(message, 402); // 402 Payment Required
-    this.recoveryStep = recoveryStep;
+```ts
+import { BaseError } from "throw-me";
+
+class PaymentRequiredError extends BaseError {
+  constructor(message = "Payment required") {
+    super(message, 402, "PAYMENT_REQUIRED");
   }
 }
 
-// 2. Use it in your logic
-function processOrder() {
-  throw new CustomPaymentError(
-    "Subscription expired",
-    "Visit /billing to renew",
-  );
-}
+// usage
+throw new PaymentRequiredError("Subscription expired");
+```
 
-// 3. Catch with full Type Safety
-try {
-  processOrder();
-} catch (error) {
-  if (error instanceof CustomPaymentError) {
-    // TypeScript knows 'recoveryStep' exists here!
-    console.error(`Error: ${error.message}. Action: ${error.recoveryStep}`);
-  }
-}
+## Testing
+
+Your errors are fully testable:
+
+```ts
+import { NotFoundError } from "throw-me";
+
+const error = new NotFoundError();
+
+console.log(error.statusCode); // 404
+console.log(error.code); // NOT_FOUND
 ```
