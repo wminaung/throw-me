@@ -59,7 +59,7 @@ app.get("/user/:id", (req: Request, res: Response) => {
 If the built-in methods in ThrowMe aren't enough, you can easily create custom errors that maintain compatibility with the BaseError system and TypeScript's type-checking.
 
 ```typescript
-import { BaseError, ThrowMe } from "your-library-name";
+import { BaseError, ThrowMe } from "throw-me";
 
 // 1. Define your custom error class
 class CustomPaymentError extends BaseError {
