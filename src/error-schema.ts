@@ -12,7 +12,7 @@ export enum ErrorCode {
   SERVICE_UNAVAILABLE = "SERVICE_UNAVAILABLE",
   GENERIC = "GENERIC",
 }
-export const schema = {
+export const errorStandard = {
   badRequest: {
     statusCode: 400,
     message: "Bad request",

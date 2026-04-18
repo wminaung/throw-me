@@ -1,5 +1,5 @@
 import { BaseError } from "./BaseError.js";
-import { schema } from "./error-schema.js";
+import { errorStandard } from "./error-schema.js";
 
 const {
   badRequest,
@@ -13,7 +13,7 @@ const {
   tooManyRequests,
   unauthorized,
   validation,
-} = schema;
+} = errorStandard;
 
 // 4xx errors
 

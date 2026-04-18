@@ -12,10 +12,11 @@ import {
   TooManyRequestsError,
   MethodNotAllowedError,
 } from "./HttpErrors.js";
-import { schema } from "./error-schema.js";
+import { errorStandard } from "./error-schema.js";
 import { BaseError } from "./BaseError.js";
 
 describe("HTTP Error Classes Tests", () => {
+  const schema = errorStandard;
   const standardTests = [
     {
       ErrorClass: BadRequestError,
